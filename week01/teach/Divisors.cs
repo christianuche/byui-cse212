@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 public static class Divisors {
     /// <summary>
     /// Entry point for the Divisors class
@@ -17,8 +19,20 @@ public static class Divisors {
     /// <param name="number">The number to find the divisor</param>
     /// <returns>List of divisors</returns>
     private static List<int> FindDivisors(int number) {
+        // Here I needed to solve for the divisor using the for loop
+        // List to store the divisors
         List<int> results = new();
-        // TODO problem 1
+
+        // loop through numbers from 1 to -1
+        for (int i = 1; i < number; i++)
+        {
+            //Check if i is a divisor of number
+            if (number % i == 0)
+            {
+                results.Add(i); //Add i to the result list
+            }
+        }
+        // Return the list of divisors
         return results;
     }
 }
