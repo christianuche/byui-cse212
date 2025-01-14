@@ -6,7 +6,7 @@ public static class Arrays
     /// integer greater than 0.
     /// </summary>
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
-    public static double[] MultiplesOf(double number, int length)
+    public static double[] MultiplesOf(double numbers, int length)
     {
         // TODO Problem 1 Start
         // step 1: Firstly we need an array that will hold the multiples, with size equal to "Length"
@@ -16,7 +16,7 @@ public static class Arrays
         for (int i = 0; i < length; i++)
         {
             // In this step 3: We will calculate the multiple by multiplying "number" by (i + 1)
-            multiples[i] = number * (i + 1);
+            multiples[i] = numbers * (i + 1);
         }
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
