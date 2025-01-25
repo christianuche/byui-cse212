@@ -25,6 +25,23 @@
     private static int CountDuplicates(int[] data)
     {
         // Add code here.
-        return 0;
+        // Here we will be using the SET to count the number of duplicates.
+        // We will create a set to track the unique elements.
+        // Iterate through the array of numbers.
+        // For each number, check if it's already in the set:
+            // - If it is, it means it's a duplicate
+            // - If it's not, add it to the set.
+        HashSet<int> uniqueElements = new HashSet<int>();
+        HashSet<int> duplicates = new HashSet<int>();
+
+        // Using the for loop
+        foreach (int num in data)
+        {
+            if (!uniqueElements.Add(num)) // If Add returns false, the number was already in the set
+            {
+                duplicates.Add(num); // Add to duplicates set
+            }
+        }
+        return duplicates.Count;
     }
 }

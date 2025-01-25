@@ -25,6 +25,14 @@ public class Translator
     public void AddWord(string fromWord, string toWord)
     {
         // ADD YOUR CODE HERE
+        if (!_words.ContainsKey(fromWord))
+        {
+            _words.Add(fromWord, toWord);
+        }
+        else
+        {
+            Console.WriteLine($"The word '{fromWord}' is already in the dictionary.");
+        }
     }
 
     /// <summary>
@@ -35,6 +43,10 @@ public class Translator
     public string Translate(string fromWord)
     {
         // ADD YOUR CODE HERE
-        return "";
+        if (_words.TryGetValue(fromWord, out string translation))
+        {
+            return translation;
+        }
+        return "???";
     }
 }

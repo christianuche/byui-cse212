@@ -29,10 +29,18 @@
             if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
                 highPriorityIndex = index;
         }
+        // Find the item with the highest priority
+        var highestPriorityItem = _queue.OrderByDescending(item => item.Priority).First();
+
+        // Remove it from the queue
+        _queue.Remove(highestPriorityItem);
+
+        // Return its value
+        return highestPriorityItem.Value;
 
         // Remove and return the item with the highest priority
-        var value = _queue[highPriorityIndex].Value;
-        return value;
+        //var value = _queue[highPriorityIndex].Value;
+        //return value;
     }
 
     public override string ToString()
