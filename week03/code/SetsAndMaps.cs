@@ -97,29 +97,52 @@ public static class SetsAndMaps
     /// using the [] notation.
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
+{
+    // Remove spaces and convert to lowercase
+    var cleanWord1 = word1.Replace(" ", "").ToLower();
+    var cleanWord2 = word2.Replace(" ", "").ToLower();
+
+    // If the lengths are not the same, they cannot be anagrams
+    if (cleanWord1.Length != cleanWord2.Length)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        var cleanWord1 = word1.Replace(" ", "").ToLower();
-        var cleanWord2 = word2.Replace(" ", "").ToLower();
-
-        if (cleanWord1.Length != cleanWord2.Length)
-        {
-            return false;
-        }
-
-        var charCount = new Dictionary<char, int>();
-
-        foreach (var c in cleanWord1)
-        {
-            if (charCount.ContainsKey(c))
-            {
-                charCount[c]++;
-            }
-            else
-            
-        }
-        return charCount.Values.All(count => count == 0);
+        return false;
     }
+
+    // Create a dictionary to count character occurrences
+    var charCount = new Dictionary<char, int>();
+
+    // Update the dictionary with the counts from cleanWord1
+    foreach (var c in cleanWord1)
+    {
+        if (charCount.ContainsKey(c))
+        {
+            charCount[c]++;
+        }
+        else
+        {
+            charCount[c] = 1;
+        }
+    }
+
+    // Subtract counts using characters from cleanWord2
+    foreach (var c in cleanWord2)
+    {
+        if (!charCount.ContainsKey(c))
+        {
+            return false; // Character in word2 not in word1
+        }
+
+        charCount[c]--;
+
+        if (charCount[c] == 0)
+        {
+            charCount.Remove(c); // Remove the character to reduce dictionary size
+        }
+    }
+
+    // If the dictionary is empty, the words are anagrams
+    return charCount.Count == 0;
+}
 
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
@@ -152,6 +175,19 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+
+        // Handle cases where the deserialization might fail or no features are available
+        if (featureCollection?.Features == null || featureCollection.Features.Count == 0)
+        {
+            return Array.Empty<string>(); // Return an empty array if no data is available
+        }
+
+        // Extract and format earthquake data
+        var earthquakeSummaries = featureCollection.Features
+            .Where(f => f.Properties != null && !string.IsNullOrWhiteSpace(f.Properties.Place) && f.Properties.Mag.HasValue)
+            .Select(f => $"{f.Properties.Place} - Mag {f.Properties.Mag:F2}")
+            .ToArray();
+
+        return earthquakeSummaries;
     }
 }
